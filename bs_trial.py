@@ -37,4 +37,5 @@ for item in item_list:
     item_page_url = img_data[0].find('a')['href']
     item_page_soup = open_page(item_page_url)
     #to gain further info about product: item_page_soup.find('a', class_='ppcvip-db')['href']
+    
     breakpoint()
