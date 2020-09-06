@@ -28,20 +28,22 @@ if not os.path.exists(pok_folder):
 my_url = f'https://www.ebay.co.uk/sch/i.html?_sop=12&_sadis=15&_dmd=1&LH_Complete=1&_stpos=LS29NZ&_from=R40&_nkw={search_item}&_sacat=0&_ipg=200'
 
 listing_page = open_page(my_url)
-item_list = listing_page.find_all('li', class_='clearfix')
+item_list = listing_page.find_all('li', class_='s-item')
 counter_y = 0
 counter_n = 0
 for item in item_list:
     try:
-        img_url = item.find('img', class_='img')['imgurl']
+        img_url = item.find('img', class_='s-item__image-img')['src']
     except KeyError:
-        img_url = item.find('img', class_='img')['src']
+        img_url = item.find('img', class_='img')['img_url']
     except TypeError:
         continue
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
     img.show()
+    breakpoint()
     label = input("Correct card? ")
+    continue
     if label == 'y':
         counter_y += 1
         file_path = os.path.join(true_folder, search_item+str(counter_y)+'.png')
